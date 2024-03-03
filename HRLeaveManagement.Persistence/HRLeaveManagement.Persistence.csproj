@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Application\HRLeaveManagement.Application.csproj" />
+  </ItemGroup>
+
 </Project>
