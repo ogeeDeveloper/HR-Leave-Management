@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
+using HRLeaveManagement.Application.Features.LeaveType.Queries.GetAllLeaveTypeQuery;
 using HRLeaveManagement.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HRLeaveManagement.Application.MappingProfiles
 {
