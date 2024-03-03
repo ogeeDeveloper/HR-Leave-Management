@@ -2,6 +2,4 @@
 
 namespace HRLeaveManagement.Application.Features.LeaveType.Queries.GetAllLeaveTypeQuery;
 
-public class GetAllLeaveTypeQuery : IRequest
-{
-}
+public record GetAllLeaveTypeQuery : IRequest<List<LeaveTypeDto>>;
