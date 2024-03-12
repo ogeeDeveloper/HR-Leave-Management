@@ -12,7 +12,14 @@ public static class InfrastructureDependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration config)
     {
-        services.Configure<EmailSettings>(config.GetSection("EmailSettings"));
+        //services.Configure<EmailSettings>(config.GetSection("EmailSettings"));
+
+        // Explicitly bind the configuration section to EmailSettings
+        services.Configure<EmailSettings>(emailSettings =>
+        {
+            config.GetSection("EmailSettings").Bind(emailSettings);
+        });
+
         services.AddTransient<IEmailSender, EmailSender>();
         
         // Register ILogger

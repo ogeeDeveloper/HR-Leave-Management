@@ -13,10 +13,10 @@ namespace HRLeaveManagement.Persistence
         {
             // Register DbContext
             services.AddDbContext<HRDatabaseContext>(options =>
-            {
-                //Register entity framework as the engine
-                options.UseSqlServer(config.GetConnectionString("HrDatabaseConnectionString"));
-            });
+                options.UseSqlServer(config.GetConnectionString("HrDatabaseConnectionString")));
+
+
+            //services.AddSqlServer<HRDatabaseContext>((config.GetConnectionString("HrDatabaseConnectionString")));
 
             // Register a scope of the Generic Respostory
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

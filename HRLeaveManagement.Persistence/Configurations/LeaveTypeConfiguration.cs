@@ -24,7 +24,6 @@ namespace HRLeaveManagement.Persistence.Configurations
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now,
                 });
-            throw new NotImplementedException();
         }
     }
 }
