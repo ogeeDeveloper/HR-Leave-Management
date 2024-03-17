@@ -25,8 +25,8 @@ public class CreateLeaveAllocationCommandValidator : AbstractValidator<CreateLea
    }
    
    // Check if Leave type name is unique
-   private async Task<bool> LeaveTypeNameUnique(UpdateLeaveTypeCommand command, CancellationToken cancellationToken)
+   /*private async Task<bool> LeaveTypeNameUnique(UpdateLeaveTypeCommand command, CancellationToken cancellationToken)
    {
       return await _leaveAllocationRepository.IsLeaveTypeUnique(command.Name);
-   }
+   }*/
 }

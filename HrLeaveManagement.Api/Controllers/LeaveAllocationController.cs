@@ -1,3 +1,8 @@
+using HRLeaveManagement.Application.Features.LeaveAllocation.Commands.CreateLeaveAllocation;
+using HRLeaveManagement.Application.Features.LeaveAllocation.Commands.DeleteLeaveAllocation;
+using HRLeaveManagement.Application.Features.LeaveAllocation.Commands.UpdateLeaveAllocation;
+using HRLeaveManagement.Application.Features.LeaveAllocation.Queries.GetLeaveAllocation;
+using HRLeaveManagement.Application.Features.LeaveAllocation.Queries.GetLeaveAllocationDetail;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,34 +20,56 @@ namespace HrLeaveManagement.Api.Controllers
         }
         // GET: api/<LeaveAllocationController>
         [HttpGet]
-        public IEnumerable<string> GetLeaveAllocation()
+        public async Task<ActionResult<List<LeaveAllocationDto>>> GetLeaveAllocation(bool isLoggedInUser=false)
         {
-            return new string[] { "value1", "value2" };
+            var leaveAllocations = await _mediator.Send(new GetLeaveAllocationQuery());
+            return Ok(leaveAllocations);
         }
 
         // GET api/<LeaveAllocationController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<LeaveAllocationDetailDto>> Get(int id)
         {
-            return "value";
+            var leaveAllocation = await _mediator.Send(new GetLeaveAllocationDetailQuery(id));
+            
+            return Ok(leaveAllocation);
         }
 
         // POST api/<LeaveAllocationController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Post(CreateLeaveAllocationCommand leaveAllocationCommand)
         {
+            var response = await _mediator.Send(leaveAllocationCommand);
+            return NoContent();
         }
 
         // PUT api/<LeaveAllocationController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Put(UpdateLeaveAllocationCommand leaveAllocationCommand)
         {
+            await _mediator.Send(leaveAllocationCommand);
+            return NoContent();
         }
 
         // DELETE api/<LeaveAllocationController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> Delete(int id)
         {
+            var command = new DeleteLeaveAllocationCommand
+            {
+                Id = id
+            };
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }
