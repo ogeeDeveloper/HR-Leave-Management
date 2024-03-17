@@ -2,7 +2,7 @@
 using HRLeaveManagement.Application.Contracts.Persistence;
 using MediatR;
 
-namespace HRLeaveManagement.Application.Features.LeaveRequest.Queries;
+namespace HRLeaveManagement.Application.Features.LeaveRequest.Queries.GetLeaveRequestList;
 
 public class GetLeaveRequestListQueryHandler :IRequestHandler<GetLeaveRequestListQuery, List<GetLeaveRequestListDto>>
 {
