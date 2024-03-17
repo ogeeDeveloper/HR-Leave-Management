@@ -48,7 +48,10 @@ public class UpdateLeaveRequestCommandHandler : IRequestHandler<UpdateLeaveReque
                 To = string.Empty,
                 Body = $"Your leave request for {request.StartDate:D} to {request.EndDate:D}" +
                        $"has been updated successfully.",
+                Subjecct = "Leave Request Updated"
             };
+
+            await _emailSender.SendEmil(email);
         }
         catch (Exception ex)
         {
