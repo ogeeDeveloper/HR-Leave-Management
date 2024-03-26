@@ -1,0 +1,96 @@
+﻿@page "/leavetypes/"
+@using HrLeaveManagment.BlazerUI.Contracts
+@using HrLeaveManagment.BlazerUI.Models
+@using HrLeaveManagment.BlazerUI.Services
+
+<h3>Leave Types</h3>
+
+<div class="m-2 d-flex justify-content-end">
+    <button class="btn btn-success" @onclick="CreateLeaveType">Add Leave Type</button>
+</div>
+
+@Message
+
+@if(LeaveTypes == null)
+{
+    <p>Loading Data...</p>
+}
+
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Default Days</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var leaveType in LeaveTypes)
+            {
+                <tr>
+                    <td>@leaveType.Id</td>
+                    <td>@leaveType.Name</td>
+                    <td>@leaveType.DefaultDays</td>
+                    <td>
+                        <button class="btn btn-dark" @onclick=@(() => AllocateLeaveType(leaveType.Id))>Allocate Leave</button>
+                        <button class="btn btn-warning" @onclick=@(() => EditLeaveType(leaveType.Id))>Edit</button>
+                        <button class="btn btn-info" @onclick=@(() => DetailesLeavetype(leaveType.Id))>Details</button>
+                        <button class="btn btn-danger" @onclick=@(() => DeleteLeavetype(leaveType.Id))>Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+    [Inject]
+    public ILeaveTypeService LeaveTypeService { get; set; }
+    public List<LeaveTypeVM> LeaveTypes { get; private set; }
+    public string Message { get; set; } = string.Empty;
+
+    protected void CreateLeaveType()
+    {
+        NavigationManager.NavigateTo("/leavetypes/create/");
+    }
+
+    protected void AllocateLeaveType(int id)
+    {
+
+    }
+
+    protected void EditLeaveType(int id)
+    {
+        NavigationManager.NavigateTo($"/leavetypes/edit/{id}");
+    }
+
+    protected void DetailesLeavetype(int id)
+    {
+        NavigationManager.NavigateTo($"/leavetypes/details/{id}");
+    }
+
+    protected async void DeleteLeavetype(int id)
+    {
+        var response = await LeaveTypeService.DeleteLeaveType(id);
+
+        if (response.Success)
+        {
+            StateHasChanged(); // will re-render the component
+        }
+        else
+        {
+            Message = response.Message;
+        }
+    }
+
+    // when the component has loads and finish doing its preliminary stuffs, update the value of the currently empty list of leaf types by calling the API
+    protected override async Task OnInitializedAsync()
+    {
+        LeaveTypes = await LeaveTypeService.GetLeaveTypes();
+    }
+}

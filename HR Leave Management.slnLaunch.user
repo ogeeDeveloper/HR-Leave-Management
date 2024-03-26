@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Name": "HrLeaveManagement.Api\\HrLeaveManagement.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Name": "HrLeaveManagment.BlazerUI\\HrLeaveManagment.BlazerUI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
